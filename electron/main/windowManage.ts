@@ -32,9 +32,9 @@ export function createMainWindow() {
     title: "OpenIM",
     icon: join(global.pathConfig.publicPath, "favicon.ico"),
     frame: false,
-    show: false,
-    minWidth: 680,
-    minHeight: 550,
+    show: true,
+    minWidth: 200,
+    minHeight: 400,
     titleBarStyle: "hiddenInset",
     webPreferences: {
       preload: global.pathConfig.preload,

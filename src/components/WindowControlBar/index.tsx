@@ -18,21 +18,8 @@ const WindowControlBar = () => {
       <div
         className="app-no-drag flex h-[14px] cursor-pointer items-center"
         onClick={() => window.electronAPI?.ipcInvoke("minimizeWindow")}
-      >
-        <img
-          className="app-no-drag cursor-pointer"
-          width={14}
-          src={win_min}
-          alt="win_min"
-        />
-      </div>
-      <img
-        className="app-no-drag mx-3 cursor-pointer"
-        width={13}
-        src={win_max}
-        alt="win_max"
-        onClick={() => window.electronAPI?.ipcInvoke("maxmizeWindow")}
-      />
+      ></div>
+
       <img
         className="app-no-drag cursor-pointer"
         width={12}

@@ -5,7 +5,7 @@ import { MainContentWrap } from "@/layout/MainContentWrap";
 import { EmptyChat } from "@/pages/chat/EmptyChat";
 import { QueryChat } from "@/pages/chat/queryChat";
 
-import contactRoutes from "./ContactRoutes";
+import contactRoutes from "./contactRoutes";
 import GlobalErrorElement from "./GlobalErrorElement";
 
 const router = createHashRouter([

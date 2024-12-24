@@ -53,6 +53,10 @@ const ConnectBar = () => {
   );
 };
 
+const SearchBar = () => {
+  return <></>;
+};
+
 const ConversationSider = () => {
   const { conversationID } = useParams();
   const conversationList = useConversationStore((state) => state.conversationList);

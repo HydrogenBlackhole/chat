@@ -21,7 +21,7 @@ const OIMAvatar: React.FC<IOIMAvatarProps> = (props) => {
   const {
     src,
     text,
-    size = 42,
+    size = 36,
     color = "#fff",
     bgColor = "#0289FA",
     isgroup = false,
@@ -33,7 +33,6 @@ const OIMAvatar: React.FC<IOIMAvatarProps> = (props) => {
     if (src) {
       if (default_avatars.includes(src as string))
         return getDefaultAvatar(src as string);
-
       return src;
     }
     return isgroup ? default_group : undefined;

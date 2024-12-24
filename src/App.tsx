@@ -31,11 +31,10 @@ function App() {
       <QueryClientProvider client={queryClient}>
         <Suspense fallback={<div>loading...</div>}>
           <AntdApp>
-            <AntdGlobalComp />
             <RouterProvider router={router} />
           </AntdApp>
         </Suspense>
-        <ReactQueryDevtools initialIsOpen={false} />
+        <ReactQueryDevtools initialIsOpen={true} />
       </QueryClientProvider>
     </ConfigProvider>
   );

@@ -4,9 +4,9 @@
 // export const API_URL = "https://xxx.com/api";
 // export const USER_URL = "https://xxx.com/chat";
 
-export const WS_URL = "ws://your-server-ip:10001";
-export const API_URL = "http://your-server-ip:10002";
-export const CHAT_URL = "http://your-server-ip:10008";
+export const WS_URL = "ws://110.40.58.201:10001";
+export const API_URL = "http://110.40.58.201:10002";
+export const CHAT_URL = "http://110.40.58.201:10008";
 
 export const getWsUrl = () => localStorage.getItem("wsUrl") || WS_URL;
 export const getApiUrl = () => localStorage.getItem("apiUrl") || API_URL;

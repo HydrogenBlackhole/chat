@@ -10,11 +10,16 @@ import { v4 as uuidV4 } from "uuid";
 
 import { modal } from "@/AntdGlobalComp";
 import { updateBusinessUserInfo } from "@/api/login";
-import contact_icon from "@/assets/images/nav/nav_bar_contact.png";
-import contact_icon_active from "@/assets/images/nav/nav_bar_contact_active.png";
-import message_icon from "@/assets/images/nav/nav_bar_message.png";
-import message_icon_active from "@/assets/images/nav/nav_bar_message_active.png";
-import change_avatar from "@/assets/images/profile/change_avatar.png";
+import chats from "@/assets/images/icon/chats.svg";
+import chats_active from "@/assets/images/icon/chats_active.svg";
+import contacts from "@/assets/images/icon/contacts.svg";
+import contacts_active from "@/assets/images/icon/contacts_active.svg";
+import guarantee from "@/assets/images/icon/guarantee.svg";
+import guarantee_active from "@/assets/images/icon/guarantee_active.svg";
+import me from "@/assets/images/icon/me.svg";
+import me_active from "@/assets/images/icon/me_active.svg";
+import wallet from "@/assets/images/icon/wallet.svg";
+import wallet_active from "@/assets/images/icon/wallet_active.svg";
 import OIMAvatar from "@/components/OIMAvatar";
 import { useContactStore, useConversationStore, useUserStore } from "@/store";
 import { feedbackToast } from "@/utils/common";
@@ -30,23 +35,31 @@ const { Sider } = Layout;
 
 const NavList = [
   {
-    icon: message_icon,
-    icon_active: message_icon_active,
-    title: t("placeholder.chat"),
+    icon: chats,
+    icon_active: chats_active,
     path: "/chat",
   },
   {
-    icon: contact_icon,
-    icon_active: contact_icon_active,
-    title: t("placeholder.contact"),
-    path: "/contact",
+    icon: contacts,
+    icon_active: contacts_active,
+    path: "/contacts",
+  },
+  {
+    icon: guarantee,
+    icon_active: guarantee_active,
+    path: "/guarantee",
+  },
+  {
+    icon: wallet,
+    icon_active: wallet_active,
+    path: "/wallet",
+  },
+  {
+    icon: me,
+    icon_active: me_active,
+    path: "/me",
   },
 ];
-
-i18n.on("languageChanged", () => {
-  NavList[0].title = t("placeholder.chat");
-  NavList[1].title = t("placeholder.contact");
-});
 
 const resizeFile = (file: File): Promise<File> =>
   new Promise((resolve) => {
@@ -66,19 +79,20 @@ const resizeFile = (file: File): Promise<File> =>
 
 type NavItemType = (typeof NavList)[0];
 
-const NavItem = ({ nav: { icon, icon_active, title, path } }: { nav: NavItemType }) => {
+const NavItem = ({ nav: { icon, icon_active, path } }: { nav: NavItemType }) => {
   const resolvedPath = useResolvedPath(path);
   const { navigator } = React.useContext(UNSAFE_NavigationContext);
+
   const toPathname = navigator.encodeLocation
     ? navigator.encodeLocation(path).pathname
     : resolvedPath.pathname;
+
   const locationPathname = location.pathname;
   const isActive =
     locationPathname === toPathname ||
     (locationPathname.startsWith(toPathname) &&
       locationPathname.charAt(toPathname.length) === "/") ||
     location.hash.startsWith(`#${toPathname}`);
-
   const unReadCount = useConversationStore((state) => state.unReadCount);
   const unHandleFriendApplicationCount = useContactStore(
     (state) => state.unHandleFriendApplicationCount,
@@ -108,12 +122,10 @@ const NavItem = ({ nav: { icon, icon_active, title, path } }: { nav: NavItemType
       <div
         className={clsx(
           "mb-3 flex h-[52px] w-12 cursor-pointer flex-col items-center justify-center rounded-md",
-          { "bg-[#e9e9eb]": isActive },
         )}
         onClick={tryNavigate}
       >
-        <img width={20} src={isActive ? icon_active : icon} alt="" />
-        <div className="mt-1 text-xs text-gray-500">{title}</div>
+        <img width={19} height={21} src={isActive ? icon_active : icon} alt="" />
       </div>
     </Badge>
   );
@@ -186,17 +198,19 @@ const LeftNavBar = memo(() => {
   };
 
   const tryLogout = () => {
-    modal.confirm({
-      title: t("placeholder.logOut"),
-      content: t("toast.confirmlogOut"),
-      onOk: async () => {
-        try {
-          await userLogout();
-        } catch (error) {
-          feedbackToast({ error });
-        }
-      },
-    });
+    userLogout();
+
+    // modal.confirm({
+    //   title: t("placeholder.logOut"),
+    //   content: t("toast.confirmlogOut"),
+    //   onOk: async () => {
+    //     try {
+    //       await userLogout();
+    //     } catch (error) {
+    //       feedbackToast({ error });
+    //     }
+    //   },
+    // });
   };
 
   const customUpload = async ({ file }: { file: File }) => {
@@ -231,7 +245,7 @@ const LeftNavBar = memo(() => {
           <div className={styles["avatar-wrapper"]}>
             <OIMAvatar src={selfInfo.faceURL} text={selfInfo.nickname} />
             <div className={styles["mask"]}>
-              <img src={change_avatar} width={19} alt="" />
+              {/*<img src={change_avatar} width={19} alt="" />*/}
             </div>
           </div>
         </Upload>
@@ -260,7 +274,7 @@ const LeftNavBar = memo(() => {
 
   return (
     <Sider
-      className="no-mobile border-r border-gray-200 !bg-[#F4F4F4] dark:border-gray-800 dark:!bg-[#141414]"
+      className="no-mobile border-r border-gray-200 !bg-[#2E2E2E] dark:border-gray-800 dark:!bg-[#141414]"
       width={60}
       theme="light"
     >
