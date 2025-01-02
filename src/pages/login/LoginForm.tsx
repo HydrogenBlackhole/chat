@@ -15,7 +15,6 @@ const LoginForm = () => {
   useEffect(() => {
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useLogin().then((data2) => {
-      // @ts-ignore
       const { data } = data2;
       // @ts-ignore
       setBase64Image(jrQrcode.getQrBase64(JSON.stringify(data)));

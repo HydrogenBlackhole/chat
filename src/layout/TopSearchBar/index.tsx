@@ -137,7 +137,7 @@ const TopSearchBar = () => {
   }, []);
 
   return (
-    <div className="no-mobile app-drag flex h-10 min-h-[40px] items-center bg-[var(--top-search-bar)] dark:bg-[#141414]">
+    <div className="display-none no-mobile app-drag flex h-10 min-h-[40px] items-center bg-[var(--top-search-bar)] dark:bg-[#141414]">
       <div className="flex w-full items-center justify-center">
         <div className="app-no-drag flex h-[26px] w-1/3 cursor-pointer items-center justify-center rounded-md bg-[rgba(255,255,255,0.2)]">
           <img width={16} src={search} alt="" />

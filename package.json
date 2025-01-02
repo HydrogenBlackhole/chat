@@ -11,6 +11,9 @@
     }
   },
   "scripts": {
+    "build:win": "vite build  &&  electron-builder --win --x64",
+    "build:win-arm": "vite build  &&  electron-builder --win --arm64",
+    "build:linux": "vite build  &&  electron-builder --linux --x64",
     "dev": "vite --force --host",
     "build": "vite build",
     "preview": "vite preview",

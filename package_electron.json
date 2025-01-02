@@ -35,6 +35,9 @@
     "*.{json,html,css,scss,xml,md}": ["prettier --write"]
   },
   "dependencies": {
+    "exifreader": "^4.26.0",
+    "crypto-js": "^4.2.0",
+
     "electron-store": "^8.1.0",
     "i18next": "^22.5.0",
     "i18next-fs-backend": "^2.2.0"

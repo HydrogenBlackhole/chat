@@ -35,7 +35,7 @@ export const MainContentLayout = () => {
   return (
     <Spin className="!max-h-none" spinning={showLockLoading} tip={loadingTip}>
       <Layout className="h-full">
-        {/*<TopSearchBar />*/}
+        <TopSearchBar />
         <Layout>
           <LeftNavBar />
           <Outlet />

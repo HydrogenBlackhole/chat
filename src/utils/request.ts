@@ -20,10 +20,13 @@ const createAxiosInstance = (baseURL: string, imToken = true) => {
       const token = imToken ? await getIMToken() : await getChatToken();
       config.headers.token = config.headers.token ?? token;
       config.headers.operationID = uuidv4();
+
+      console.log(config, "request-config");
       const data = await window.electronAPI?.ipcInvoke("getEncrypted", {
         data: JSON.stringify(config.data),
       });
       config.data.sign = data;
+
       console.log(config.data, "config");
       return config;
     },
@@ -51,13 +54,14 @@ const createAxiosInstance = (baseURL: string, imToken = true) => {
           data = await window.electronAPI?.ipcInvoke("getDecryptedByAd", {
             data: res.data,
           });
+          return Promise.resolve(data);
         } else {
           console.log(url, "not_get_ad");
           data = await window.electronAPI?.ipcInvoke("getDecrypted", {
             data: res.data,
           });
+          return data;
         }
-        return Promise.resolve(data);
       }
     },
     (err) => {

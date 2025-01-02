@@ -40,7 +40,7 @@ export const setIpcMainListener = () => {
 
 
   ipcMain.handle(IpcRenderToMain.getDecryptedByAd, async (e,{ data }) => {
-    return decryptedByAd( data);
+    return decryptedByAd( data );
   });
 
   ipcMain.handle(IpcRenderToMain.setSize, async (e,{ w,h }) => {
@@ -48,15 +48,19 @@ export const setIpcMainListener = () => {
   });
 
   ipcMain.handle(IpcRenderToMain.getDecrypted, async (e,{ data }) => {
-    if(typeof  data == "string"){
-      return JSON.parse(decryptData( data));
+    if (typeof data === 'string') {
+      return JSON.parse(decryptData( data.trim()));
     } else {
       return data;
     }
   });
 
   ipcMain.handle(IpcRenderToMain.getEncrypted, async (e,{ data }) => {
-    return encryptData( data);
+    if (typeof data === 'string') {
+      return encryptData( data);
+    } else {
+      return data;
+    }
   });
 
   ipcMain.handle(IpcRenderToMain.minimizeWindow, () => {

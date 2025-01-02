@@ -17,9 +17,9 @@ import contacts_active from "@/assets/images/icon/contacts_active.svg";
 import guarantee from "@/assets/images/icon/guarantee.svg";
 import guarantee_active from "@/assets/images/icon/guarantee_active.svg";
 import me from "@/assets/images/icon/me.svg";
-import me_active from "@/assets/images/icon/me_active.svg";
+// import me_active from "@/assets/images/icon/me_active.svg";
 import wallet from "@/assets/images/icon/wallet.svg";
-import wallet_active from "@/assets/images/icon/wallet_active.svg";
+// import wallet_active from "@/assets/images/icon/wallet_active.svg";
 import OIMAvatar from "@/components/OIMAvatar";
 import { useContactStore, useConversationStore, useUserStore } from "@/store";
 import { feedbackToast } from "@/utils/common";
@@ -51,12 +51,12 @@ const NavList = [
   },
   {
     icon: wallet,
-    icon_active: wallet_active,
+    icon_active: wallet,
     path: "/wallet",
   },
   {
     icon: me,
-    icon_active: me_active,
+    icon_active: wallet,
     path: "/me",
   },
 ];

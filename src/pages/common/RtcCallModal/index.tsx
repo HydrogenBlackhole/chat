@@ -42,8 +42,10 @@ const RtcCallModal: ForwardRefRenderFunction<
   const timer = useRef<NodeJS.Timeout>();
 
   const isRecv = selfID !== invitation?.inviterUserID;
+  console.log(isOverlayOpen, isRecv, "isOverlayOpen,isRecv,ref");
 
   useEffect(() => {
+    console.log(isOverlayOpen, isRecv, "isOverlayOpen,isRecv");
     if (!isOverlayOpen) return;
     tryInvite();
   }, [isOverlayOpen, isRecv]);

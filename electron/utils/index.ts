@@ -2,7 +2,7 @@ import * as ExifReader from "exifreader";
 import { Buffer } from "buffer";
 import path from "node:path";
 import crypto from "crypto";
-const CryptoJS = require('crypto-js');
+import CryptoJS from "crypto-js";
 export const isLinux = process.platform == "linux";
 export const isWin = process.platform == "win32";
 export const isMac = process.platform == "darwin";

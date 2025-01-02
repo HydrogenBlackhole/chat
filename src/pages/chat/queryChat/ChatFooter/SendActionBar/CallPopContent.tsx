@@ -32,6 +32,13 @@ const CallPopContent = ({
   const prepareCall = (idx: number) => {
     const conversation = useConversationStore.getState().currentConversation!;
     const mediaType = idx ? "audio" : "video";
+    console.log(
+      useUserStore.getState().selfInfo.userID,
+      SessionType.Single,
+      conversation.userID,
+      conversation,
+      "useUserStore.getState().selfInfo.userID",
+    );
     emitter.emit("OPEN_RTC_MODAL", {
       invitation: {
         inviterUserID: useUserStore.getState().selfInfo.userID,
