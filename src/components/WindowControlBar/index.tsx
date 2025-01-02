@@ -5,6 +5,8 @@ import win_close from "@/assets/images/topSearchBar/win_close.png";
 import win_max from "@/assets/images/topSearchBar/win_max.png";
 import win_min from "@/assets/images/topSearchBar/win_min.png";
 
+import { IpcRenderToMain } from "../../../electron/constants";
+
 const WindowControlBar = () => {
   useKeyPress("esc", () => {
     window.electronAPI?.ipcInvoke("minimizeWindow");

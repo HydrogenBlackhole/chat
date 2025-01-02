@@ -1,18 +1,22 @@
 import type { MessageReceiveOptType } from "@openim/wasm-client-sdk";
+import { Buffer } from "buffer";
+import crypto from "crypto";
 import { useMutation, useQuery } from "react-query";
 import { v4 as uuidv4 } from "uuid";
 
-import { getChatUrl } from "@/config";
 import { useUserStore } from "@/store";
-import { AppConfig } from "@/store/type";
+import { ApiResponse, AppConfig } from "@/store/type";
 import createAxiosInstance from "@/utils/request";
 import { getChatToken } from "@/utils/storage";
 
 import { errorHandle } from "./errorHandle";
 
-const request = createAxiosInstance(getChatUrl());
+const request = createAxiosInstance("");
 
 const platform = window.electronAPI?.getPlatform() ?? 5;
+const IpData: NonNullable<unknown> = JSON.parse(<string>localStorage.getItem("ad"));
+// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+const preUrl = `/ff/${btoa(unescape(encodeURIComponent(IpData.ips[0])))}`;
 
 const getAreaCode = (code?: string) =>
   code ? (code.includes("+") ? code : `+${code}`) : code;
@@ -125,29 +129,6 @@ export const modifyPassword = async (params: API.Login.ModifyParams) => {
   );
 };
 
-// log in
-export const useLogin = () => {
-  return useMutation(
-    (params: API.Login.LoginParams) =>
-      request.post<{ chatToken: string; imToken: string; userID: string }>(
-        "/account/login",
-        {
-          ...params,
-          platform,
-          areaCode: getAreaCode(params.areaCode),
-        },
-        {
-          headers: {
-            operationID: uuidv4(),
-          },
-        },
-      ),
-    {
-      onError: errorHandle,
-    },
-  );
-};
-
 // Get user information
 export interface BusinessUserInfo {
   userID: string;
@@ -239,7 +220,7 @@ export const updateBusinessUserInfo = async (
   );
 };
 
-export const getAppConfig = async () =>
+export const getAppConfig = () =>
   request.post<{ config: AppConfig }>(
     "/client_config/get",
     {},
@@ -249,3 +230,51 @@ export const getAppConfig = async () =>
       },
     },
   );
+
+export const useLogin = () => {
+  return request.post<unknown>(
+    `${preUrl}/api/v2.Login/loginQrcode`,
+    {},
+    {
+      headers: {
+        operationID: uuidv4(),
+      },
+    },
+  );
+};
+
+export const loginPc = async (params: any) => {
+  const os = await window.electronAPI?.ipcInvoke("getSystemInfo");
+  return request.post<unknown>(
+    `${preUrl}/api/v2.Login/loginPc`,
+    {
+      ...params,
+    },
+    {
+      headers: {
+        os: os.type,
+        brand: os.hostname,
+        operationID: uuidv4(),
+      },
+    },
+  );
+};
+
+export const getAd = async () => {
+  const timestamp = new Date().getTime();
+  const expectedSignature = await window.electronAPI?.ipcInvoke("getSignature", {
+    data: timestamp,
+  });
+  return request.post<unknown>(
+    "/ss/api/ad/get_ad",
+    {
+      timestamp: timestamp,
+      signature: expectedSignature,
+    },
+    {
+      headers: {
+        operationID: uuidv4(),
+      },
+    },
+  );
+};

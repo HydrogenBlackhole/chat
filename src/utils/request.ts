@@ -20,13 +20,18 @@ const createAxiosInstance = (baseURL: string, imToken = true) => {
       const token = imToken ? await getIMToken() : await getChatToken();
       config.headers.token = config.headers.token ?? token;
       config.headers.operationID = uuidv4();
+      const data = await window.electronAPI?.ipcInvoke("getEncrypted", {
+        data: JSON.stringify(config.data),
+      });
+      config.data.sign = data;
+      console.log(config.data, "config");
       return config;
     },
     (err) => Promise.reject(err),
   );
 
   serves.interceptors.response.use(
-    (res) => {
+    async (res) => {
       if (tokenErrorCodeList.includes(res.data.errCode)) {
         feedbackToast({
           msg: t("toast.loginExpiration"),
@@ -36,10 +41,24 @@ const createAxiosInstance = (baseURL: string, imToken = true) => {
           },
         });
       }
-      if (res.data.errCode !== 0) {
+      if (typeof res.data == "object" && res.data.errCode !== 0) {
         return Promise.reject(res.data);
+      } else {
+        let data: any;
+        let url: string = res.request.responseURL;
+        if (url.includes("get_ad")) {
+          console.log(url, "get_ad");
+          data = await window.electronAPI?.ipcInvoke("getDecryptedByAd", {
+            data: res.data,
+          });
+        } else {
+          console.log(url, "not_get_ad");
+          data = await window.electronAPI?.ipcInvoke("getDecrypted", {
+            data: res.data,
+          });
+        }
+        return Promise.resolve(data);
       }
-      return res.data;
     },
     (err) => {
       if (err.message.includes("timeout")) {

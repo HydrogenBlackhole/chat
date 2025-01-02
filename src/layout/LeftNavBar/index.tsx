@@ -42,7 +42,7 @@ const NavList = [
   {
     icon: contacts,
     icon_active: contacts_active,
-    path: "/contacts",
+    path: "/contact",
   },
   {
     icon: guarantee,

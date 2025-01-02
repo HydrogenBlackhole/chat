@@ -44,6 +44,7 @@ export function createMainWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
+      javascript: true, // 允许页面执行 JavaScript 代码
       devTools: true,
       webSecurity: false,
     },
@@ -156,6 +157,12 @@ export const hideWindow = () => {
   if (!mainWindow) return;
   mainWindow.hide();
 };
+
+export const setWindowSize = (w:Number,h:Number) => {
+  if (!mainWindow) return;
+  mainWindow.setSize(w, h);
+};
+
 
 export const setFullScreen = (isFullscreen: boolean): boolean => {
   if (!mainWindow) return false;

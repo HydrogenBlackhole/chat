@@ -42,6 +42,14 @@ export interface AppConfig {
   allowSendMsgNotFriend: number;
   needInvitationCodeRegister: number;
 }
+export interface ApiResponse {
+  success: boolean;
+  status: number;
+  message: string;
+  data: {
+    session_id: string; // 登陆唯一标识
+  };
+}
 
 export interface AppSettings {
   locale: LocaleString;

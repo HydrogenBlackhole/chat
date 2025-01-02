@@ -32,6 +32,7 @@ const RtcCallModal: ForwardRefRenderFunction<
   const { invitation } = inviteData;
   const [connect, setConnect] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
+
   const [authData, setAuthData] = useState<AuthData>({
     serverUrl: "",
     token: "",

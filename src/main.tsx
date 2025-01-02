@@ -1,5 +1,6 @@
 import "./index.scss";
 import "./i18n/index";
+import "virtual:uno.css";
 
 import ReactDOM from "react-dom/client";
 

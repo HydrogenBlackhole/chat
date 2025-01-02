@@ -32,7 +32,11 @@ type LoginFormProps = {
   updateLoginMethod: (method: "phone" | "email") => void;
 };
 
-const LoginForm = ({ loginMethod, setFormType, updateLoginMethod }: LoginFormProps) => {
+const LoginForm3 = ({
+  loginMethod,
+  setFormType,
+  updateLoginMethod,
+}: LoginFormProps) => {
   const navigate = useNavigate();
   const [form] = Form.useForm();
   const { mutate: login, isLoading: loginLoading } = useLogin();
@@ -132,4 +136,4 @@ const LoginForm = ({ loginMethod, setFormType, updateLoginMethod }: LoginFormPro
   );
 };
 
-export default LoginForm;
+export default LoginForm3;

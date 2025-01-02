@@ -1,8 +1,7 @@
 import fs from "fs";
 import path from "path";
-import os from "os";
 import { DataPath, IElectronAPI } from "./../../src/types/globalExpose.d";
-import { contextBridge, ipcRenderer, shell } from "electron";
+import { contextBridge, ipcRenderer } from "electron";
 import { isProd } from "../utils";
 
 const getPlatform = () => {
@@ -38,13 +37,14 @@ const unsubscribeAll = (channel: string) => {
   ipcRenderer.removeAllListeners(channel);
 };
 
-const ipcInvoke = (channel: string, ...arg: any) => {
-  return ipcRenderer.invoke(channel, ...arg);
+const ipcInvoke = async (channel: string, ...arg: any) => {
+  return await ipcRenderer.invoke(channel, ...arg);
 };
 
 const ipcSendSync = (channel: string, ...arg: any) => {
   return ipcRenderer.sendSync(channel, ...arg);
 };
+
 
 const saveFileToDisk = async ({
   file,
@@ -80,4 +80,12 @@ const Api: IElectronAPI = {
   saveFileToDisk,
 };
 
-contextBridge.exposeInMainWorld("electronAPI", Api);
+if (process.contextIsolated) {
+  try {
+    contextBridge.exposeInMainWorld('electronAPI', Api);
+  } catch (error) {
+    console.error(error);
+  }
+} else {
+  window.electronAPI = Api;
+}

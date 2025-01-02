@@ -63,7 +63,7 @@ export const useUserStore = create<UserStore>()((set, get) => ({
   userLogout: async (force = false) => {
     if (!force) await IMSDK.logout();
     clearIMProfile();
-    set({ selfInfo: {} as BusinessUserInfo });
+    // set({ selfInfo: {} as BusinessUserInfo });
     useContactStore.getState().clearContactStore();
     useConversationStore.getState().clearConversationStore();
     window.electronAPI?.ipcInvoke("updateUnreadCount", 0);
