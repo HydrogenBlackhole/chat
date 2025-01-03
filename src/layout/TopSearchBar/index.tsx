@@ -57,6 +57,7 @@ const TopSearchBar = () => {
       chooseModalRef.current?.openOverlay();
     };
     const callRtcHandler = (inviteData: InviteData) => {
+      // console.log("ffffffcallRtcHandler")
       if (rtcRef.current?.isOverlayOpen) return;
       setInviteData(inviteData);
       rtcRef.current?.openOverlay();

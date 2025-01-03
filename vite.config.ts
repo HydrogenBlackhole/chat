@@ -60,45 +60,15 @@ export default defineConfig(async ({ command }) => {
       // }),
       // visualizer({ open: true }),
     ],
-    server: {
-      host: "0.0.0.0", // 使用你的局域网IP或者特殊值'0.0.0.0'以便外部设备可以通过IP访问
-      port: 5173, // 你的端口号，如果你想要的端口
-      proxy: {
-        '/ff': {
-          target: '',
-          changeOrigin: true,
-          rewrite: (path) => path.replace(new RegExp("^/ff/.*?/"), ""),
-          // bypass(req, res, options) {
-          //   const proxyURL = options.target + options.rewrite(req.url)
-          //   req.headers['x-req-proxyURL'] = proxyURL // 设置未生效
-          //   res.setHeader('x-req-proxyURL', proxyURL) // 设置响应头可以看到
-          // },
-          configure(_, options) {
-            options.rewrite = path => {
-              let result = path.match(/\/ff\/(.*?)\//i)
-              let ip = Buffer.from(result[1], 'base64').toString();
-              let result2 = path.match(/\/ff\/.*?\/(.*?)$/i)
-              // let url = new URL("http://"+ ip +":1090")
-              options.target = "http://"+ ip +":1090"
-              return "/" + result2[1];
-            }
-          },
-        },
-        '/ss': {
-          target: 'http://110.40.33.122:5889',
-          changeOrigin: true,
-          secure: false,
-          bypass(req, res, options) {
-            const proxyURL = options.target + options.rewrite(req.url)
-            console.log('proxyURL', proxyURL)
-            req.headers['x-req-proxyURL'] = proxyURL // 设置未生效
-            res.setHeader('x-req-proxyURL', proxyURL) // 设置响应头可以看到
-          },
-          rewrite: (path) => path.replace(new RegExp("^/ss"), ""),
-
-        },
-      },
-    },
+    server: !!process.env.VSCODE_DEBUG
+      ? (() => {
+          const url = new URL(pkg.debug.env.VITE_DEV_SERVER_URL);
+          return {
+            host: url.hostname,
+            port: +url.port,
+          };
+        })()
+      : undefined,
     clearScreen: false,
     optimizeDeps: {
       esbuildOptions: {

@@ -67,7 +67,7 @@ export const setAppGlobalData = () => {
     distPath,
     publicPath,
     asarPath,
-    trayIcon: join(publicPath, `/icons/${isWin ? "icon.ico" : "tray.png"}`),
+    trayIcon: join(publicPath, `/icons/${isWin ? "icon.png" : "icon.png"}`),
     indexHtml: join(distPath, "index.html"),
     splashHtml: join(distPath, "splash.html"),
     preload: join(__dirname, "../preload/index.js"),

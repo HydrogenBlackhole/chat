@@ -32,7 +32,7 @@ export function createMainWindow() {
     title: "OpenIM",
     icon: join(global.pathConfig.publicPath, "favicon.ico"),
     frame: false,
-    show: true,
+    show: false,
     minWidth: 200,
     minHeight: 400,
     titleBarStyle: "hiddenInset",
@@ -44,7 +44,6 @@ export function createMainWindow() {
       nodeIntegration: false,
       contextIsolation: true,
       sandbox: false,
-      javascript: true, // 允许页面执行 JavaScript 代码
       devTools: true,
       webSecurity: false,
     },
@@ -62,7 +61,9 @@ export function createMainWindow() {
     if (url.startsWith("https:")) shell.openExternal(url);
     return { action: "deny" };
   });
-
+  mainWindow.webContents.openDevTools({
+    mode: "detach",
+  });
   mainWindow.on("focus", () => {
     mainWindow?.flashFrame(false);
     registerShortcuts();

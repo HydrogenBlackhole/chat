@@ -16,9 +16,8 @@ export const getSignature = async (timestamp: {
 };
 
 const getKey = async ()=>{
-  let src = path.dirname(path.dirname(__dirname)) + "/public/icons/icon.png";
 
-  const tags = await ExifReader.load(src);
+  const tags = await ExifReader.load(global.pathConfig.trayIcon);
   let ss = '';
   tags.UserComment.value.forEach((comment: number) => {
     ss += String.fromCharCode(comment);

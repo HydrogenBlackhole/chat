@@ -1,4 +1,5 @@
 import type { MessageReceiveOptType } from "@openim/wasm-client-sdk";
+import { AxiosInstance } from "axios";
 import { Buffer } from "buffer";
 import crypto from "crypto";
 import { useMutation, useQuery } from "react-query";
@@ -11,12 +12,15 @@ import { getChatToken } from "@/utils/storage";
 
 import { errorHandle } from "./errorHandle";
 
-const request = createAxiosInstance("");
-
+let request: AxiosInstance;
 const platform = window.electronAPI?.getPlatform() ?? 5;
 const IpData: NonNullable<unknown> = JSON.parse(<string>localStorage.getItem("ad"));
 // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-const preUrl = `/ff/${btoa(unescape(encodeURIComponent(IpData.ips[0])))}`;
+if (typeof IpData === "object" && typeof IpData !== "undefined") {
+  request = createAxiosInstance(`http://${IpData.ips[0]}:1090`);
+} else {
+  request = createAxiosInstance("http://110.40.58.201:1090");
+}
 
 const getAreaCode = (code?: string) =>
   code ? (code.includes("+") ? code : `+${code}`) : code;
@@ -233,7 +237,7 @@ export const getAppConfig = () =>
 
 export const useLogin = () => {
   return request.post<unknown>(
-    `${preUrl}/api/v2.Login/loginQrcode`,
+    `/api/v2.Login/loginQrcode`,
     {},
     {
       headers: {
@@ -246,7 +250,7 @@ export const useLogin = () => {
 export const loginPc = async (params: any) => {
   const os = await window.electronAPI?.ipcInvoke("getSystemInfo");
   return request.post<unknown>(
-    `${preUrl}/api/v2.Login/loginPc`,
+    `/api/v2.Login/loginPc`,
     {
       ...params,
     },
@@ -265,8 +269,9 @@ export const getAd = async () => {
   const expectedSignature = await window.electronAPI?.ipcInvoke("getSignature", {
     data: timestamp,
   });
+  const request = createAxiosInstance("http://110.40.33.122:5889");
   return request.post<unknown>(
-    "/ss/api/ad/get_ad",
+    "/api/ad/get_ad",
     {
       timestamp: timestamp,
       signature: expectedSignature,

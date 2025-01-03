@@ -60,7 +60,7 @@ const createAxiosInstance = (baseURL: string, imToken = true) => {
           data = await window.electronAPI?.ipcInvoke("getDecrypted", {
             data: res.data,
           });
-          return data;
+          return Promise.resolve(data);
         }
       }
     },
