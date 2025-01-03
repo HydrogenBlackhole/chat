@@ -12,15 +12,15 @@ import { getChatToken } from "@/utils/storage";
 
 import { errorHandle } from "./errorHandle";
 
-let request: AxiosInstance;
+const request: AxiosInstance;
 const platform = window.electronAPI?.getPlatform() ?? 5;
-const IpData: NonNullable<unknown> = JSON.parse(<string>localStorage.getItem("ad"));
-// eslint-disable-next-line @typescript-eslint/no-unsafe-argument
-if (typeof IpData === "object" && typeof IpData !== "undefined") {
-  request = createAxiosInstance(`http://${IpData.ips[0]}:1090`);
-} else {
-  request = createAxiosInstance("http://110.40.58.201:1090");
-}
+// const IpData: NonNullable<unknown> = JSON.parse(<string>localStorage.getItem("ad"));
+// // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+// if (typeof IpData === "object" && typeof IpData !== "undefined") {
+//   request = createAxiosInstance(`http://${IpData.ips[0]}:1090`);
+// } else {
+// }
+request = createAxiosInstance("http://110.40.58.201:1090");
 
 const getAreaCode = (code?: string) =>
   code ? (code.includes("+") ? code : `+${code}`) : code;
@@ -256,7 +256,7 @@ export const loginPc = async (params: any) => {
     },
     {
       headers: {
-        os: os.type,
+        os: os.type === "Windows_NT" ? "Windows" : os.type,
         brand: os.hostname,
         operationID: uuidv4(),
       },

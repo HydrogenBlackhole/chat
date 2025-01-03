@@ -226,6 +226,7 @@ export function useGlobalEvent() {
   const notPushType = [MessageType.TypingMessage, MessageType.RevokeMessage];
 
   const newMessageHandler = ({ data }: WSEvent<MessageItem[]>) => {
+    console.log(data, "newMessageHandler2");
     if (syncState === "loading") {
       return;
     }

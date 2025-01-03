@@ -88,12 +88,14 @@ export const RtcControl = ({
     };
 
     const newMessageHandler = ({ data }: WSEvent<MessageItem[]>) => {
+      console.log(data, "newMessageHandler-rtc1");
       data.map((message) => {
         if (message.contentType === MessageType.CustomMessage) {
           const customData = JSON.parse(message.customElem!.data) as {
             data: RtcInvite;
             customType: CustomType;
           };
+          //"{"customType":203,"data":{"initiateTime":1735874757302,"inviteeUserIDList":["2321575486"],"inviterUserID":"7521722853","mediaType":"video","platformID":2,"roomID":"4f8f9807-a984-4d48-8bd9-b434752222cc","sessionType":1,"timeout":30}}"
           if (customData.customType === CustomType.CallingAccept) {
             acceptHandler(customData.data);
           }

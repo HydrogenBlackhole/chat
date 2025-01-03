@@ -41,9 +41,10 @@ const CallPopContent = ({
     );
     emitter.emit("OPEN_RTC_MODAL", {
       invitation: {
+        initiateTime: Date.now(),
         inviterUserID: useUserStore.getState().selfInfo.userID,
         inviteeUserIDList: [userInfo?.userID ?? conversation.userID],
-        groupID: "",
+        // groupID: "",
         roomID: uuidV4(),
         timeout: 60,
         mediaType,

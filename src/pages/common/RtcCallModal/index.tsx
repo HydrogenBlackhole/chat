@@ -85,6 +85,7 @@ const RtcCallModal: ForwardRefRenderFunction<
 
       console.log(message, "dddddd");
       //"{"customType":200,"data":{"inviterUserID":"2321575486","inviteeUserIDList":["5331119073"],"groupID":"","roomID":"9666f255-70d8-451f-9568-fe04cc264f14","timeout":60,"mediaType":"video","sessionType":1,"platformID":7}}"
+
       const ss = await IMSDK.sendMessage({
         recvID,
         message,

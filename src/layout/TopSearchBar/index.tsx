@@ -63,6 +63,7 @@ const TopSearchBar = () => {
       rtcRef.current?.openOverlay();
     };
     const newMessageHandler = ({ data }: WSEvent<MessageItem[]>) => {
+      console.log(data, "newMessageHandler topSearchBar");
       if (rtcRef.current?.isOverlayOpen) return;
       let rtcInvite = undefined as undefined | RtcInvite;
       data.map((message) => {
